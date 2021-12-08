@@ -2,9 +2,18 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User.model');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const {isAuthenticated} = require('./../middleware/jwt.js');
 
 const saltRounds = 10;
+
+let mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
 
 router.post('/signup', (req, res, next) => {
     const {email, password, username} = req.body;
@@ -46,6 +55,25 @@ router.post('/signup', (req, res, next) => {
             const user = {email, username, _id};
 
             res.status(201).json({user: user});
+            return createdUser
+        })
+        .then(createdUser => {
+
+            const {email, username, verification_hash} = createdUser;
+            let mailDetails = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'E-Mail verification',
+                text: `Dear ${username},\nYou're almost ready to get started.\nPlease click the link below to verify your email address and be part of Ironslack!\n\n${process.env.ORIGIN}/auth/verification/${verification_hash}\n\nCheers,\nIronslack`
+            };
+
+            mailTransporter.sendMail(mailDetails, function (err, data) {
+                if (err) {
+                    console.log('Error Occurs while sending the email');
+                } else {
+                    console.log('Email sent successfully');
+                }
+            });
         })
         .catch(err => {
             console.log(err);
@@ -92,7 +120,8 @@ router.post('/login', (req, res, next) => {
 router.get('/verification/:hash', (req, res, next) => {
     User.findOneAndUpdate({verification_hash: req.params.hash}, {is_verified: true})
         .then(foundUser => {
-            console.log(foundUser)
+            console.log('user is verified', foundUser);
+            res.status(200).json({message: `Dear ${foundUser.username}, you have verified your email successfully.`})
         })
         .catch(err => {
             console.log(err);

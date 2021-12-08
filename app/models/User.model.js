@@ -31,10 +31,6 @@ const userSchema = new Schema(
             last_seen: {
                 type: String
             },
-            is_online: {
-                type: Boolean,
-                default: false,
-            },
             profile: {
                 type: Schema.Types.ObjectId,
                 ref: 'Profile',
