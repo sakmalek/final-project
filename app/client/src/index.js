@@ -10,7 +10,9 @@ import {StyledEngineProvider} from '@mui/material/styles';
 ReactDOM.render(
     <BrowserRouter>
         <AuthProviderWrapper>
+            <StyledEngineProvider injectFirst>
                 <App/>
+            </StyledEngineProvider>
         </AuthProviderWrapper>
     </BrowserRouter>,
     document.getElementById('root')

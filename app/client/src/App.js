@@ -1,17 +1,25 @@
 import './App.css';
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import {Routes, Route} from "react-router-dom";
+
+import Navigation from "./components/Navigation";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Slack from "./components/Slack";
+import {Container} from "@mui/material";
 
 
 function App() {
     return (
         <div className="App">
-            <Stack spacing={2} direction="row">
-                <Button variant="text">Text</Button>
-                <Button variant="contained">Contained</Button>
-                <Button variant="outlined">Outlined</Button>
-            </Stack>
+            <Container maxWidth="sm">
+                <Navigation/>
+                <Routes>
+                    <Route path="/signup" element={<Signup/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/" element={<Slack/>}/>
+                </Routes>
+            </Container>
         </div>
     );
 }
