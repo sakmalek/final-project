@@ -1,10 +1,39 @@
 const router = require("express").Router();
+const Message = require("../models/Message.model");
+const Channel = require("../models/Channel.model");
 
-router.get("/", (req, res, next) => {
-  res.json("All good in here");
+router.get("/:id/channel", (req, res, next) => {
+    Message.find({receiver_channel_id: req.params.id})
+        .then(messages => {
+            res.status(200).json(messages);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: "Internal Server Error."})
+        })
 });
 
-// You put the next routes here 👇
-// example: router.use("/auth", authRoutes)
+router.get("/:id/sender", (req, res, next) => {
 
+    Message.find({sender_id: req.params.id})
+        .then(messages => {
+            res.status(200).json(messages);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: "Internal Server Error."})
+        })
+});
+
+router.get("/:id/receiver", (req, res, next) => {
+
+    Message.find({receiver_user_id: req.params.id})
+        .then(messages => {
+            res.status(200).json(messages);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: "Internal Server Error."})
+        })
+});
 module.exports = router;

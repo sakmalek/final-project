@@ -1,16 +1,19 @@
 const {Schema, model} = require("mongoose");
 
-const profileSchemaSchema = new Schema(
+const profileSchema = new Schema(
         {
             firstname: {
                 type: String,
+                trim: true,
             },
             lastname: {
                 type: String,
+                trim: true,
             },
             username: {
                 type: String,
                 required: [true, "Username is required."],
+                trim: true,
             },
             email: {
                 type: String,
@@ -20,14 +23,32 @@ const profileSchemaSchema = new Schema(
                 trim: true
             },
             birthday: {
-                type: Date(),
+                type: Date,
+            },
+            bio: {
+                type: String,
+                max: 100,
+                trim: true,
+            },
+            interests: {
+                type: [String],
+                trim: true,
+            },
+            follower_ids: {
+                type: [Schema.Types.ObjectId],
+                ref: 'User',
             },
             image_url: {
                 type: String,
             },
             github_username: {
                 type: String,
-            }
+                trim: true,
+            },
+            is_verified: {
+                type: Boolean,
+                default: false
+            },
         },
         {
             timestamps: true,

@@ -13,6 +13,7 @@ const userSchema = new Schema(
             username: {
                 type: String,
                 required: [true, "Username is required."],
+                trim: true,
             },
             password_hash: {
                 type: String,

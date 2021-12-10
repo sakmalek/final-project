@@ -23,8 +23,8 @@ router.post('/signup', (req, res, next) => {
         return;
     }
 
-    const emailValid = email.includes('@')
-    if (!emailValid) {
+    const regex_email = /^\S+@\S+\.\S+$/;
+    if (!regex_email.test(email)) {
         res.status(400).json({message: 'email is not valid.'});
         return;
     }
