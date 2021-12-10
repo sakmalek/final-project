@@ -5,11 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import {AuthProviderWrapper} from './context/auth';
+import {StyledEngineProvider} from '@mui/material/styles';
 
 ReactDOM.render(
     <BrowserRouter>
         <AuthProviderWrapper>
-            <App/>
+                <App/>
         </AuthProviderWrapper>
     </BrowserRouter>,
     document.getElementById('root')
