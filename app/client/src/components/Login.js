@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import {Box, Button, Paper, TextField, Typography} from "@mui/material";
+import {Button, Grid, Paper, TextField, Typography, useMediaQuery} from "@mui/material";
 import {Link} from "react-router-dom";
+
 
 const Login = () => {
 
@@ -9,41 +10,53 @@ const Login = () => {
         console.log('submit')
     }
     return (
-        <Box onSubmit={submitHandler}
-             component="form"
-             sx={{
-                 position: 'absolute',
-                 left: '50%',
-                 top: '50%',
-                 transform: 'translate(-50%, -80%)',
-                 '& > :not(style)': {
-                     width: '30vw',
-                     height: '50vh',
-                 },
-             }}
+        <Grid item xs={12} container onSubmit={submitHandler}
+              component="form"
+              direction="column"
+              alignItems="center"
+              justifyContent="center"
+              minHeight="100vh"
+              minWidth="100vw"
         >
 
-            <Paper style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyItems: "center",
-                justifyContent: 'center',
-                alignContent: 'center',
-            }} elevation={3}>
+            <Paper style={{minWidth: "19rem"}} elevation={5}>
 
-                <Typography variant="h6" component="div" gutterBottom>Login</Typography>
-                <TextField sx={{ml: 6, mr: 6, mt: 1, mb: 1}} id="outlined-basic" label="E-Mail" variant="outlined"/>
-                <TextField sx={{ml: 6, mr: 6, mt: 1, mb: 1}} id="outlined-basic" type="password" label="Password"
-                           variant="outlined"/>
+                <Grid item xs={12} direction="column"
+                      alignItems="center"
+                      justifyContent="center"> <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
+                                                           variant="h6"
+                                                           component="div"
+                                                           gutterBottom>Login</Typography>
+                </Grid>
+                <Grid item xs={12}> <TextField style={{width: '16rem'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
+                                               id="outlined-basic"
+                                               name="email"
+                                               label="E-Mail"
+                                               variant="outlined"
+                /> </Grid>
+                <Grid item xs={12}> <TextField style={{width: '16rem'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
+                                               id="outlined-basic"
+                                               name="password"
+                                               type="password"
+                                               label="Password"
+                                               variant="outlined"/>
+                </Grid>
 
-                <Button sx={{ml: 6, mr: 6, mt: 2}} type="submit">Login</Button>
+                <Grid textAlign="center" item xs={12}>
+                    <Button sx={{ml: 3, mr: 3, mt: 1, mb: 1}} type="submit">Login</Button>
+                </Grid>
 
-                <Typography variant="h7" component="div">Don't have an account? <Link
-                    to="/signup">signup</Link></Typography>
-                <Typography variant="h9" component="div">Forgot your Password? <Link
-                    to="#password">password</Link></Typography>
+                <Grid item xs={12}>
+                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}variant="h7" component="div">Don't have an account? <Link
+                        to="/signup">signup</Link>
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}} variant="h9" component="div">Forgot your Password? <Link
+                    to="#password">reset</Link></Typography>
+                </Grid>
             </Paper>
-        </Box>
+        </Grid>
     );
 }
 
