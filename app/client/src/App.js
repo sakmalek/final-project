@@ -9,6 +9,7 @@ import Verification from "./components/Verification";
 import Reset from "./components/Reset";
 
 import {Grid} from "@mui/material";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 function App() {
@@ -17,9 +18,16 @@ function App() {
             <Routes>
                 <Route path="/signup" element={<Signup/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/" element={<Slack/>}/>
                 <Route path="/verification/:hash" element={<Verification/>}/>
                 <Route path="/reset/:hash" element={<Reset/>}/>
+                <Route
+                    path='/'
+                    element={
+                        <ProtectedRoute redirectTo='/login'>
+                            <Slack/>
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </Grid>
     );

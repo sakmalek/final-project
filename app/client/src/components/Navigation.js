@@ -9,9 +9,11 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
+import {useContext} from 'react'
+import {AuthContext} from '../context/auth'
 
 export default function Navigation() {
+    const {logoutUser} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -27,6 +29,12 @@ export default function Navigation() {
     };
 
     const handleMenuClose = () => {
+        setAnchorEl(null);
+        handleMobileMenuClose();
+    };
+
+    const handleLogout = () => {
+        logoutUser();
         setAnchorEl(null);
         handleMobileMenuClose();
     };
@@ -51,7 +59,7 @@ export default function Navigation() {
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>Setting</MenuItem>
             <MenuItem onClick={handleMenuClose}>Delete Account</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
 
