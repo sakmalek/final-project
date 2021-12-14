@@ -3,7 +3,7 @@ const Conversation = require("../models/Conversation")
 
 router.get("/", (req, res, next) => {
 
-    Conversation.find()
+    Conversation.find().populate("receiver_id")
         .then(conversations => {
             res.status(200).json(conversations);
         })

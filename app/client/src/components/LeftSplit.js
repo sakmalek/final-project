@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -9,10 +9,11 @@ import {
     Typography,
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Box from "@mui/material/Box";
 
-const LeftSplit = ({channels, setReceiverId, setChannelId}) => {
+const LeftSplit = ({channels, conversations, setReceiverId, setChannelId}) => {
 
-    if (!channels) return <CircularProgress color="inherit"/>
+    if (!channels) return <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="primary"/>
     return (
         <>
             <Accordion sx={{m: .5, backgroundColor: "#032051db", color: "orange"}}>
@@ -57,18 +58,20 @@ const LeftSplit = ({channels, setReceiverId, setChannelId}) => {
                 <AccordionDetails>
                     <Typography>
                         <>
-                            {channels && channels.map(channel => {
+                            {conversations && conversations.map(conversation => {
                                 return (
-                                    <Tooltip key={channel._id} title={channel.description} placement="top">
+                                    <Box sx={{display: "flex", width: "100%", pb:1}}>
+                                        <img style={{width: '40px', 'border-radius': '50%'}}
+                                             src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                         <Button sx={{color: "yellow"}}
                                                 onClick={() => {
                                                     setChannelId(null)
-                                                    setReceiverId(channel._id)
+                                                    setReceiverId(conversation.receiver_id._id)
                                                 }
                                                 }>
-                                            {` - ${channel.name}`}
+                                            {`${conversation.receiver_id.username}`}
                                         </Button>
-                                    </Tooltip>
+                                    </Box>
                                 );
                             })
                             }

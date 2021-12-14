@@ -45,13 +45,13 @@ const RightSplit = ({channelId, receiverId}) => {
         <>
             <Grid item xs={12} sx={{
                 position: "fixed",
-                bottom: "1rem",
+                bottom: "20px",
                 width: "75%",
                 pl: 2
             }}
             ><MessagePost channelId={channelId} receiverId={receiverId} post={post} setPost={setPost}
                           sx={{m: 0, p: 0}}/></Grid>
-            <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="inherit"/>
+            <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="primary"/>
         </>
     )
     return (
@@ -70,7 +70,7 @@ const RightSplit = ({channelId, receiverId}) => {
                                 fontWeight={"bold"}
                             >
                                 <div>
-                                    <p style={{color: "orange"}}>{message.sender_id && message.sender_id.username}</p>
+                                    <p style={{color: "orange"}}>{message.sender_id && message.sender_id.username.toUpperCase()}</p>
                                 </div>
                             </TimelineOppositeContent>
                             <TimelineSeparator>
