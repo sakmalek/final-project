@@ -24,6 +24,9 @@ app.use("/auth", auth);
 const channel = require("./routes/channel");
 app.use("/channel", channel);
 
+const conversation = require("./routes/conversation");
+app.use("/conversation", conversation);
+
 const message = require("./routes/message");
 app.use("/message", message);
 
