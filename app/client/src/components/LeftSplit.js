@@ -15,7 +15,7 @@ const LeftSplit = ({channels, setReceiverId, setChannelId}) => {
     if (!channels) return <CircularProgress color="inherit"/>
     return (
         <>
-            <Accordion sx={{m: .5, backgroundColor: "#000000cf", color: "orange"}}>
+            <Accordion sx={{m: .5, backgroundColor: "#032051db", color: "orange"}}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{color: "orange"}}/>}
                     aria-controls="panel1a-content"
@@ -45,7 +45,7 @@ const LeftSplit = ({channels, setReceiverId, setChannelId}) => {
                 </AccordionDetails>
             </Accordion>
 
-            <Accordion sx={{m: .5, backgroundColor: "#000000cf", color: "yellow"}}
+            <Accordion sx={{m: .5, backgroundColor: "#032051db", color: "yellow"}}
                        defaultExpanded={true}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{color: "yellow"}}/>}

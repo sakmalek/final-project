@@ -7,7 +7,7 @@ import axios from "axios";
 
 const Slack = () => {
     let {innerWidth: width, innerHeight: height} = window;
-    height -= 16;
+    height -= 20;
 
     const [channels, setChannels] = useState(null);
     const [channelId, setChannelId] = useState(null);
@@ -22,19 +22,20 @@ const Slack = () => {
     }, []);
 
     return (
-        <Grid item sx={{pl: 1, pr: 1, pt: 1}} xs={12} spacing={1}
+        <Grid item sx={{pl: 1, pr: 1, pt: 1, minHeight: height, maxHeight: height, height: "100%"}} xs={12} spacing={1}
               container>
-            <Grid item lg={2} md={4} xs={6}>
+            <Grid item sx={{height: "100%"}} lg={2} md={2} xs={4}>
                 <Paper
-                    sx={{height: height, backgroundColor: "#0000008c", overflowY: "overlay"}}
+                    sx={{maxHeight: height, height: "100%", backgroundColor: "#032051db", overflowY: "overlay"}}
                     elevation={3}>
                     <LeftSplit
                         channels={channels} setReceiverId={setReceiverId} setChannelId={setChannelId}
                     />
                 </Paper>
             </Grid>
-            <Grid item lg={10} md={8} xs={6}>
-                <Paper sx={{height: height, backgroundColor: "#0000008c"}} elevation={3}>
+            <Grid item lg={10} md={10} xs={8}>
+                <Paper sx={{maxHeight: height, height: "100%", backgroundColor: "#032051db", overflowY: "overlay"}}
+                       elevation={3}>
                     <RightSplit
                         channelId={channelId} receiverId={receiverId}
                     />
