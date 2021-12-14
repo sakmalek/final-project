@@ -19,14 +19,18 @@ const RightSplit = ({channelId, receiverId}) => {
     const [messages, setMessages] = useState([]);
     const [post, setPost] = useState(false);
 
-    const changeDateFormat = (date) => `${date}`
-        useEffect(() => {
-            axios.get(`message/${channelId}/channel`)
-                .then(response => {
-                    setMessages(response.data)
-                })
-                .catch(err => console.log(err))
-        }, [channelId, post]);
+    const changeDateFormat = (string) => {
+        const parsed = Date.parse(string)
+        const date = new Date(parsed)
+        return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`
+    }
+    useEffect(() => {
+        axios.get(`message/${channelId}/channel`)
+            .then(response => {
+                setMessages(response.data)
+            })
+            .catch(err => console.log(err))
+    }, [channelId, post]);
 
     if (messages.length === 0) return (
         <>
