@@ -24,7 +24,7 @@ const Slack = () => {
     return (
         <Grid item sx={{pl: 1, pr: 1, pt: 1, minHeight: height, maxHeight: height, height: "100%"}} xs={12} spacing={1}
               container>
-            <Grid item sx={{height: "100%"}} lg={2} md={2} xs={4}>
+            <Grid item lg={2} md={2} xs={4} sx={{height: height}}>
                 <Paper
                     sx={{maxHeight: height, height: "100%", backgroundColor: "#032051db", overflowY: "overlay"}}
                     elevation={3}>
@@ -33,7 +33,7 @@ const Slack = () => {
                     />
                 </Paper>
             </Grid>
-            <Grid item lg={10} md={10} xs={8}>
+            <Grid item lg={10} md={10} xs={8} sx={{height: height}}>
                 <Paper sx={{maxHeight: height, height: "100%", backgroundColor: "#032051db", overflowY: "overlay"}}
                        elevation={3}>
                     <RightSplit

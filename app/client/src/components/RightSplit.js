@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext, useRef} from "react";
 import {
     CircularProgress, Grid, Typography,
 } from "@mui/material";
@@ -11,26 +11,35 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import TextsmsOutlinedIcon from '@mui/icons-material/TextsmsOutlined';
 import MessagePost from "./MessagePost"
+import {AuthContext} from "../context/auth";
 
 const RightSplit = ({channelId, receiverId}) => {
-    console.log({receiverId, channelId})
+    const {user} = useContext(AuthContext);
+
     const [messages, setMessages] = useState([]);
     const [post, setPost] = useState(false);
+
+    const messagesEndRef = useRef(null);
 
     const changeDateFormat = (string) => {
         const parsed = Date.parse(string)
         const date = new Date(parsed)
         return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`
     }
+
     useEffect(() => {
         axios.get(`message/${channelId}/channel`)
             .then(response => {
                 setMessages(response.data)
+                scrollToBottom()
             })
             .catch(err => console.log(err))
     }, [channelId, post]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({behavior: "smooth"});
+    };
 
     if (messages.length === 0) return (
         <>
@@ -50,7 +59,9 @@ const RightSplit = ({channelId, receiverId}) => {
             <Timeline sx={{color: "white", m: 0, p: 0}} position="right">
                 {
                     messages.map(message => {
-                        return <TimelineItem key={message._id}>
+                        console.log(user._id, message.sender_id)
+                        return <TimelineItem key={message._id}
+                                             position={user._id === message.sender_id._id ? "right" : "left"}>
                             <TimelineOppositeContent
                                 sx={{m: 'auto 0'}}
                                 align="right"
@@ -60,13 +71,13 @@ const RightSplit = ({channelId, receiverId}) => {
                             >
                                 <div>
                                     <p style={{color: "orange"}}>{message.sender_id && message.sender_id.username}</p>
-                                    <p>{changeDateFormat(message.updatedAt)}</p>
                                 </div>
                             </TimelineOppositeContent>
                             <TimelineSeparator>
                                 <TimelineConnector/>
                                 <TimelineDot>
-                                    <TextsmsOutlinedIcon/>
+                                    <img style={{width: '40px', 'border-radius': '50%'}}
+                                         src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                 </TimelineDot>
                                 <TimelineConnector/>
                             </TimelineSeparator>
@@ -74,11 +85,15 @@ const RightSplit = ({channelId, receiverId}) => {
                                 <Typography variant="h6" component="span">
                                     {message.source}
                                 </Typography>
-                                <Typography>Because you need strength</Typography>
+                                <Typography sx={{
+                                    fontSize: "12px",
+                                    color: "orange"
+                                }}>{changeDateFormat(message.updatedAt)}</Typography>
                             </TimelineContent>
                         </TimelineItem>
                     })
                 }
+                <div style={{height: "100px"}} ref={messagesEndRef}/>
             </Timeline>
 
             <Grid item xs={12} sx={{

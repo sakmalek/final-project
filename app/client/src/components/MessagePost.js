@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SendIcon from '@mui/icons-material/Send';
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {AuthContext} from "../context/auth";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ export default function MessagePost({receiverId, channelId, post, setPost}) {
     return (
         <Paper
             component="form"
-            sx={{display: 'flex', alignItems: 'center', height: "75px", width: "100%"}}
+            sx={{display: 'flex', alignItems: 'center', height: "75px", width: "100%", backgroundColor: "#ffffffab"}}
             onSubmit={submitHandler}
         >
             <IconButton sx={{p: '10px'}} aria-label="menu">
