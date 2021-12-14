@@ -17,7 +17,7 @@ let mailTransporter = nodemailer.createTransport({
 
 router.post('/signup', (req, res, next) => {
     const {email, password, username} = req.body;
-
+console.log(req.body)
     if (email === '' || password === '' || username === '') {
         res.status(400).json({message: "email, password and name are required."});
         return;
@@ -50,7 +50,6 @@ router.post('/signup', (req, res, next) => {
             return User.create({email, password_hash, username, verification_hash});
         })
         .then((createdUser) => {
-
             const {email, username, _id} = createdUser;
             const user = {email, username, _id};
 
@@ -92,7 +91,7 @@ router.post('/login', (req, res, next) => {
     User.findOne({email})
         .then(foundUser => {
             if (!foundUser) {
-                res.status(400).json({message: "User not found."});
+                res.status(400).json({message: "Credentials are not correct."});
                 return;
             }
             const passwordCorrect = bcrypt.compareSync(password, foundUser.password_hash)
@@ -107,7 +106,7 @@ router.post('/login', (req, res, next) => {
                 )
                 res.status(200).json({authToken: authToken})
             } else {
-                res.status(401).json({message: "Unable to authenticate user."});
+                res.status(401).json({message: "Credentials are not correct."});
 
             }
         })

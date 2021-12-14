@@ -23,7 +23,10 @@ app.use("/auth", auth);
 
 const channel = require("./routes/channel");
 app.use("/channel", channel);
-//isAuthenticated,
+
+const message = require("./routes/message");
+app.use("/message", message);
+
 const user = require("./routes/user");
 app.use("/user", user);
 

@@ -12,9 +12,10 @@ const messageSchema = new Schema(
             },
             receiver_channel_id: {
                 type: Schema.Types.ObjectId,
-                ref: 'User',
+                ref: 'Channel',
             },
             type: {
+                type:String,
                 enum: ["text", "image", "video", "audio", "code"],
             },
             source: {

@@ -1,14 +1,39 @@
-import React, {useState} from "react";
-import {Button, Grid, Paper, TextField, Typography, useMediaQuery} from "@mui/material";
-import {Link} from "react-router-dom";
-
+import React, {useContext, useState} from "react";
+import {Alert, Button, Grid, Paper, Snackbar, TextField, Typography} from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import {AuthContext} from '../context/auth'
 
 const Login = () => {
+    const navigate = useNavigate();
+    const {loginUser} = useContext(AuthContext);
+
+    const [loginForm, setLoginForm] = useState({});
+    const [errorMessage, setErrorMessage] = useState(undefined)
+    const [open, setOpen] = React.useState(false);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log('submit')
+        axios.post('/auth/login', loginForm)
+            .then(response => {
+                console.log(response.data.authToken)
+                const token = response.data.authToken
+                loginUser(token)
+                navigate('/')
+            })
+            .catch(err => {
+                setErrorMessage(err.response.data.message)
+                setOpen(true);
+            })
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
     return (
         <Grid item xs={12} container onSubmit={submitHandler}
               component="form"
@@ -21,25 +46,29 @@ const Login = () => {
 
             <Paper style={{minWidth: "19rem"}} elevation={5}>
 
-                <Grid item xs={12} direction="column"
+                <Grid item xs={12} container direction="column"
                       alignItems="center"
-                      justifyContent="center"> <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
+                      justifyContent="center"> <Typography style={{textAlign: 'center'}}
+                                                           sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
                                                            variant="h6"
                                                            component="div"
                                                            gutterBottom>Login</Typography>
                 </Grid>
                 <Grid item xs={12}> <TextField style={{width: '16rem'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
-                                               id="outlined-basic"
                                                name="email"
                                                label="E-Mail"
                                                variant="outlined"
-                /> </Grid>
+                                               onChange={e => setLoginForm({...loginForm, email: e.target.value})}
+                />
+                </Grid>
                 <Grid item xs={12}> <TextField style={{width: '16rem'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}
-                                               id="outlined-basic"
                                                name="password"
                                                type="password"
                                                label="Password"
-                                               variant="outlined"/>
+                                               variant="outlined"
+                                               onChange={e => setLoginForm({...loginForm, password: e.target.value})}
+
+                />
                 </Grid>
 
                 <Grid textAlign="center" item xs={12}>
@@ -47,15 +76,24 @@ const Login = () => {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}}variant="h7" component="div">Don't have an account? <Link
+                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}} variant="h7"
+                                component="div">Don't have an account? <Link
                         to="/signup">signup</Link>
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}} variant="h9" component="div">Forgot your Password? <Link
-                    to="#password">reset</Link></Typography>
+                    <Typography style={{textAlign: 'center'}} sx={{ml: 3, mr: 3, mt: 1, mb: 1}} variant="h9"
+                                component="div">Forgot your Password? <Link
+                        to="#password">reset</Link></Typography>
                 </Grid>
             </Paper>
+
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
+
         </Grid>
     );
 }

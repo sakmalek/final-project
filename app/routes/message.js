@@ -1,11 +1,12 @@
+const User = require("../models/User.model");
 const router = require("express").Router();
-const Channel = require("../models/Channel.model")
+const Message = require("../models/Message.model")
 
 router.get("/", (req, res, next) => {
 
-    Channel.find()
-        .then(channels => {
-            res.status(200).json(channels);
+    Message.find()
+        .then(messages => {
+            res.status(200).json(messages);
         })
         .catch(err => {
             console.log(err);
@@ -13,22 +14,34 @@ router.get("/", (req, res, next) => {
         })
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id/channel", (req, res, next) => {
 
-    Channel.findById(req.params.id)
-        .then(channel => {
-            res.status(200).json(channel);
+    Message.find({receiver_channel_id: req.params.id})
+        .populate('sender_id')
+        .populate('receiver_user_id')
+        .then(messages => {
+            res.status(200).json(messages);
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({message: "Internal Server Error."})
         })
 });
+router.get("/:sender_id/:receiver_id/conversation", (req, res, next) => {
 
+    Message.find({sender_id: req.params.id})
+        .then(messages => {
+            res.status(200).json(messages);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: "Internal Server Error."})
+        })
+});
 router.put("/", (req, res, next) => {
 
-    const {name, description, owner_id} = req.body;
-    Channel.create({name, description})
+    const {sender_id, receiver_user_id, receiver_channel_id, type, source} = req.body;
+    Message.create({sender_id, receiver_user_id, receiver_channel_id, type, source})
         .then(channel => {
             res.status(200).json({message: "channel successfully created."});
         })
@@ -40,8 +53,8 @@ router.put("/", (req, res, next) => {
 
 router.post("/:id", (req, res, next) => {
 
-    const {name, description} = req.body;
-    Channel.findOneAndUpdate(req.params.id, {name, description})
+    const {sender_id, receiver_user_id, receiver_channel_id, type, source} = req.body;
+    Message.findOneAndUpdate(req.params.id, {sender_id, receiver_user_id, receiver_channel_id, type, source})
         .then(channel => {
             res.status(200).json({message: "channel successfully updated."});
         })
@@ -53,7 +66,7 @@ router.post("/:id", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) => {
 
-    Channel.findOneAndDelete(req.params.id)
+    Message.findOneAndDelete(req.params.id)
         .then(channel => {
             res.status(200).json({message: "channel successfully deleted."});
         })
