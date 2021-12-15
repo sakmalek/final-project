@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const Conversation = require("../models/Conversation")
 
-router.get("/:id", (req, res, next) => {
+router.get("/:userId", (req, res, next) => {
 
-    Conversation.find({$or: [{user_1_id: req.params.id}, {user_2_id: req.params.id}]})
+    Conversation.find({$or: [{user_1_id: req.params.userId}, {user_2_id: req.params.userId}]})
         .populate("user_1_id")
         .populate("user_2_id")
         .then(conversations => {

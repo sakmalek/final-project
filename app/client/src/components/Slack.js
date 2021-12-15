@@ -17,7 +17,7 @@ const Slack = () => {
     const [conversationId, setConversationId] = useState(null);
 
     useEffect(() => {
-        axios.get("/channel")
+        axios.get(`/channel/${user._id}`)
             .then(response => {
                 setChannels(response.data)
             })
@@ -31,6 +31,7 @@ const Slack = () => {
             })
             .catch(err => console.log(err))
     }, []);
+
 
     return (
         <Grid item sx={{pl: 1, pr: 1, pt: 1, minHeight: height, maxHeight: height, height: "100%"}} xs={12} spacing={1}
