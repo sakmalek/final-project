@@ -1,7 +1,5 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
-import {
-    CircularProgress, Grid, Typography,
-} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import axios from "axios";
 
 import Timeline from '@mui/lab/Timeline';
@@ -14,7 +12,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import MessagePost from "./MessagePost"
 import {AuthContext} from "../context/auth";
 
-const RightSplit = ({channelId, receiverId}) => {
+const RightSplit = ({channelId, conversationId}) => {
     const {user} = useContext(AuthContext);
 
     const [messages, setMessages] = useState([]);
@@ -29,37 +27,33 @@ const RightSplit = ({channelId, receiverId}) => {
     }
 
     useEffect(() => {
-        axios.get(`message/${channelId}/channel`)
+        channelId && axios.get(`message/${channelId}/channel`)
             .then(response => {
                 setMessages(response.data)
+                console.log("MESSAGES", messages)
                 scrollToBottom()
             })
             .catch(err => console.log(err))
     }, [channelId, post]);
 
+    useEffect(() => {
+        conversationId && axios.get(`message/${conversationId}/conversation`)
+            .then(response => {
+                setMessages(response.data)
+                scrollToBottom()
+            })
+            .catch(err => console.log(err))
+    }, [conversationId, post]);
+
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({behavior: "smooth"});
     };
 
-    if (messages.length === 0) return (
-        <>
-            <Grid item xs={12} sx={{
-                position: "fixed",
-                bottom: "20px",
-                width: "75%",
-                pl: 2
-            }}
-            ><MessagePost channelId={channelId} receiverId={receiverId} post={post} setPost={setPost}
-                          sx={{m: 0, p: 0}}/></Grid>
-            <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="primary"/>
-        </>
-    )
     return (
         <>
             <Timeline sx={{color: "white", m: 0, p: 0}} position="right">
                 {
-                    messages.map(message => {
-                        console.log(user._id, message.sender_id)
+                    (messages.length !== 0) && messages.map(message => {
                         return <TimelineItem key={message._id}
                                              position={user._id === message.sender_id._id ? "right" : "left"}>
                             <TimelineOppositeContent
@@ -102,7 +96,7 @@ const RightSplit = ({channelId, receiverId}) => {
                 width: "75%",
                 pl: 2
             }}
-            ><MessagePost channelId={channelId} receiverId={receiverId} post={post} setPost={setPost}
+            ><MessagePost channelId={channelId} conversationId={conversationId} post={post} setPost={setPost}
                           sx={{m: 0, p: 0}}/></Grid>
         </>
     )

@@ -3,7 +3,7 @@ const Message = require("../models/Message.model");
 const Channel = require("../models/Channel.model");
 
 router.get("/:id/channel", (req, res, next) => {
-    Message.find({receiver_channel_id: req.params.id})
+    Message.find({channel_id: req.params.id})
         .then(messages => {
             res.status(200).json(messages);
         })
@@ -27,7 +27,7 @@ router.get("/:id/sender", (req, res, next) => {
 
 router.get("/:id/receiver", (req, res, next) => {
 
-    Message.find({receiver_user_id: req.params.id})
+    Message.find({conversation_id: req.params.id})
         .then(messages => {
             res.status(200).json(messages);
         })

@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const Conversation = require("../models/Conversation")
 
-router.get("/", (req, res, next) => {
+router.get("/:id", (req, res, next) => {
 
-    Conversation.find().populate("receiver_id")
+    Conversation.find({$or: [{user_1_id: req.params.id}, {user_2_id: req.params.id}]})
+        .populate("user_1_id")
+        .populate("user_2_id")
         .then(conversations => {
             res.status(200).json(conversations);
         })
@@ -15,8 +17,8 @@ router.get("/", (req, res, next) => {
 
 router.put("/", (req, res, next) => {
 
-    const {owner_id, receiver_id} = req.body;
-    Conversation.create({owner_id, receiver_id})
+    const {user_1_id, user_2_id} = req.body;
+    Conversation.create({user_1_id, user_2_id})
         .then(channel => {
             res.status(200).json({message: "channel successfully created."});
         })

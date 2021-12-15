@@ -11,6 +11,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {useContext} from 'react'
 import {AuthContext} from '../context/auth'
+import Divider from "@mui/material/Divider";
 
 export default function Navigation() {
     const {logoutUser} = useContext(AuthContext);
@@ -57,8 +58,9 @@ export default function Navigation() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Setting</MenuItem>
+            <Divider light/>
             <MenuItem onClick={handleMenuClose}>Delete Account</MenuItem>
+            <Divider light/>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );

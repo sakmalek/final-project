@@ -6,16 +6,16 @@ const messageSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'User',
             },
-            receiver_user_id: {
+            conversation_id: {
                 type: Schema.Types.ObjectId,
-                ref: 'User',
+                ref: 'Conversation',
             },
-            receiver_channel_id: {
+            channel_id: {
                 type: Schema.Types.ObjectId,
                 ref: 'Channel',
             },
             type: {
-                type:String,
+                type: String,
                 enum: ["text", "image", "video", "audio", "code"],
             },
             source: {

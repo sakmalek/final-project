@@ -9,9 +9,9 @@ import {useContext, useState} from "react";
 import {AuthContext} from "../context/auth";
 import axios from "axios";
 
-export default function MessagePost({receiverId, channelId, post, setPost}) {
+export default function MessagePost({conversationId, channelId, post, setPost}) {
+    console.log(channelId, conversationId)
 
-    console.log({receiverId, channelId})
     const {user} = useContext(AuthContext);
     const [message, setMessage] = useState("")
 
@@ -20,12 +20,11 @@ export default function MessagePost({receiverId, channelId, post, setPost}) {
 
         const requestBody = {
             sender_id: user._id,
-            receiver_user_id: receiverId,
-            receiver_channel_id: channelId,
+            conversation_id: conversationId,
+            channel_id: channelId,
             type: "text",
             source: message
         }
-        console.log(requestBody)
         axios.put(`/message`, requestBody)
             .then(response => {
                 console.log(response.data)
@@ -45,6 +44,7 @@ export default function MessagePost({receiverId, channelId, post, setPost}) {
                 <MenuIcon/>
             </IconButton>
             <InputBase
+                autoComplete="off"
                 sx={{ml: 1, flex: 1}}
                 placeholder="Message"
                 name="message"

@@ -16,9 +16,9 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id/channel", (req, res, next) => {
 
-    Message.find({receiver_channel_id: req.params.id})
+    Message.find({channel_id: req.params.id})
         .populate('sender_id')
-        .populate('receiver_user_id')
+        .populate('channel_id')
         .then(messages => {
             res.status(200).json(messages);
         })
@@ -27,9 +27,11 @@ router.get("/:id/channel", (req, res, next) => {
             res.status(500).json({message: "Internal Server Error."})
         })
 });
-router.get("/:sender_id/:receiver_id/conversation", (req, res, next) => {
+router.get("/:id/conversation", (req, res, next) => {
 
-    Message.find({sender_id: req.params.id})
+    Message.find({conversation_id: req.params.id})
+        .populate('sender_id')
+        .populate('channel_id')
         .then(messages => {
             res.status(200).json(messages);
         })
@@ -40,8 +42,8 @@ router.get("/:sender_id/:receiver_id/conversation", (req, res, next) => {
 });
 router.put("/", (req, res, next) => {
 
-    const {sender_id, receiver_user_id, receiver_channel_id, type, source} = req.body;
-    Message.create({sender_id, receiver_user_id, receiver_channel_id, type, source})
+    const {sender_id, conversation_id, channel_id, type, source} = req.body;
+    Message.create({sender_id, conversation_id, channel_id, type, source})
         .then(channel => {
             res.status(200).json({message: "channel successfully created."});
         })
@@ -53,8 +55,8 @@ router.put("/", (req, res, next) => {
 
 router.post("/:id", (req, res, next) => {
 
-    const {sender_id, receiver_user_id, receiver_channel_id, type, source} = req.body;
-    Message.findOneAndUpdate(req.params.id, {sender_id, receiver_user_id, receiver_channel_id, type, source})
+    const {sender_id, conversation_id, channel_id, type, source} = req.body;
+    Message.findOneAndUpdate(req.params.id, {sender_id, conversation_id, channel_id, type, source})
         .then(channel => {
             res.status(200).json({message: "channel successfully updated."});
         })

@@ -16,6 +16,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
 
     User.findById(req.params.id)
+        .populate('Profile')
         .then(user => {
             res.status(200).json(user);
         })

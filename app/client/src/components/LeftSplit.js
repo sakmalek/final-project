@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from "@mui/material/Box";
+import {AuthContext} from "../context/auth";
 
-const LeftSplit = ({channels, conversations, setReceiverId, setChannelId}) => {
+const LeftSplit = ({channels, conversations, setConversationId, setChannelId}) => {
+    const {user} = useContext(AuthContext);
 
     if (!channels) return <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="primary"/>
     return (
@@ -33,7 +35,7 @@ const LeftSplit = ({channels, conversations, setReceiverId, setChannelId}) => {
                                         <Button sx={{color: "orange"}}
                                                 onClick={() => {
                                                     setChannelId(channel._id)
-                                                    setReceiverId(null)
+                                                    setConversationId(null)
                                                 }}>
                                             {`# - ${channel.name}`}
                                         </Button>
@@ -60,16 +62,16 @@ const LeftSplit = ({channels, conversations, setReceiverId, setChannelId}) => {
                         <>
                             {conversations && conversations.map(conversation => {
                                 return (
-                                    <Box sx={{display: "flex", width: "100%", pb:1}}>
+                                    <Box sx={{display: "flex", width: "100%", pb: 1}}>
                                         <img style={{width: '40px', 'border-radius': '50%'}}
                                              src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                         <Button sx={{color: "yellow"}}
                                                 onClick={() => {
                                                     setChannelId(null)
-                                                    setReceiverId(conversation.receiver_id._id)
+                                                    setConversationId(conversation.user_1_id._id)
                                                 }
                                                 }>
-                                            {`${conversation.receiver_id.username}`}
+                                            {(user._id !== conversation.user_1_id._id) && `${conversation.user_1_id.username}` || `${conversation.user_2_id.username}`}
                                         </Button>
                                     </Box>
                                 );

@@ -1,19 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import {Grid, Paper} from "@mui/material";
 import LeftSplit from "./LeftSplit";
 import RightSplit from "./RightSplit";
 import Navigation from "./Navigation";
-
+import {AuthContext} from "../context/auth";
 import axios from "axios";
 
 const Slack = () => {
+    const {user} = useContext(AuthContext);
     let {innerWidth: width, innerHeight: height} = window;
     height -= 20;
 
     const [channels, setChannels] = useState(null);
     const [conversations, setConversations] = useState(null);
     const [channelId, setChannelId] = useState(null);
-    const [receiverId, setReceiverId] = useState(null);
+    const [conversationId, setConversationId] = useState(null);
 
     useEffect(() => {
         axios.get("/channel")
@@ -24,7 +25,7 @@ const Slack = () => {
     }, [])
 
     useEffect(() => {
-        axios.get("/conversation")
+        axios.get(`/conversation/${user._id}`)
             .then(response => {
                 setConversations(response.data)
             })
@@ -42,7 +43,7 @@ const Slack = () => {
                     <LeftSplit
                         channels={channels}
                         conversations={conversations}
-                        setReceiverId={setReceiverId}
+                        setConversationId={setConversationId}
                         setChannelId={setChannelId}
                     />
                 </Paper>
@@ -52,7 +53,7 @@ const Slack = () => {
                        elevation={3}>
                     <RightSplit
                         channelId={channelId}
-                        receiverId={receiverId}
+                        conversationId={conversationId}
                     />
                 </Paper>
             </Grid>

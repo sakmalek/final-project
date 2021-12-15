@@ -28,7 +28,7 @@ router.get("/:id", (req, res, next) => {
 router.put("/", (req, res, next) => {
 
     const {name, description, owner_id} = req.body;
-    Channel.create({name, description})
+    Channel.create({name, description, owner_id})
         .then(channel => {
             res.status(200).json({message: "channel successfully created."});
         })

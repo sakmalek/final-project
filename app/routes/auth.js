@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const User = require('../models/User.model');
+const Profile = require('../models/Profile.model');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const {isAuthenticated} = require('./../middleware/jwt.js');
@@ -17,7 +18,6 @@ let mailTransporter = nodemailer.createTransport({
 
 router.post('/signup', (req, res, next) => {
     const {email, password, username} = req.body;
-console.log(req.body)
     if (email === '' || password === '' || username === '') {
         res.status(400).json({message: "email, password and name are required."});
         return;
@@ -54,6 +54,10 @@ console.log(req.body)
             const user = {email, username, _id};
 
             res.status(201).json({user: user});
+            return createdUser
+        })
+        .then(createdUser => {
+            Profile.create({username: createdUser.username, email: createdUser.email})
             return createdUser
         })
         .then(createdUser => {
