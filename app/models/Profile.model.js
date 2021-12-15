@@ -40,6 +40,7 @@ const profileSchema = new Schema(
             },
             image_url: {
                 type: String,
+                default: "https://lh3.googleusercontent.com/KMS53aCaUNmCbZXPEAxko9kpg0t8ylgFiM1hTgfLHmEbzk0yHvpLavdoJyLes8plfWlEfwCnYxKTDm3EQk-EAj1GEyV7tLeHTpUD=s0"
             },
             github_username: {
                 type: String,

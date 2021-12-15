@@ -2,11 +2,11 @@ import './App.css';
 import * as React from 'react';
 import {Routes, Route} from "react-router-dom";
 
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import Slack from "./components/Slack";
-import Verification from "./components/Verification";
-import Reset from "./components/Reset";
+import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
+import Slack from "./components/screenSplits/Slack";
+import Verification from "./components/auth/Verification";
+import Reset from "./components/auth/Reset";
 
 import {Grid} from "@mui/material";
 import ProtectedRoute from "./components/ProtectedRoute";

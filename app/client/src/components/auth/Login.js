@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {Alert, Button, Grid, Paper, Snackbar, TextField, Typography} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {AuthContext} from '../context/auth'
+import {AuthContext} from '../../context/auth'
 
 const Login = () => {
     const navigate = useNavigate();

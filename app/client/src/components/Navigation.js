@@ -12,6 +12,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {useContext} from 'react'
 import {AuthContext} from '../context/auth'
 import Divider from "@mui/material/Divider";
+import {Button} from "@mui/material";
 
 export default function Navigation() {
     const {logoutUser} = useContext(AuthContext);
@@ -103,15 +104,13 @@ export default function Navigation() {
                 <p>Notifications</p>
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
+                <Button
                     size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
                     aria-haspopup="true"
                     color="inherit"
                 >
                     <AccountCircle/>
-                </IconButton>
+                </Button>
                 <p>Profile</p>
             </MenuItem>
         </Menu>

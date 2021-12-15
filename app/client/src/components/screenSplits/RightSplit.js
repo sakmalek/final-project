@@ -9,8 +9,8 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import MessagePost from "./MessagePost"
-import {AuthContext} from "../context/auth";
+import MessagePost from "../MessagePost"
+import {AuthContext} from "../../context/auth";
 
 const RightSplit = ({channelId, conversationId}) => {
     const {user} = useContext(AuthContext);
@@ -91,13 +91,15 @@ const RightSplit = ({channelId, conversationId}) => {
             </Timeline>
 
             <Grid item xs={12} sx={{
-                position: "fixed",
+                position: "absolute",
                 bottom: "1rem",
-                width: "75%",
+                width: "90%",
                 pl: 2
             }}
-            ><MessagePost channelId={channelId} conversationId={conversationId} post={post} setPost={setPost}
-                          sx={{m: 0, p: 0}}/></Grid>
+            >{channelId || conversationId &&
+            <MessagePost channelId={channelId} conversationId={conversationId} post={post} setPost={setPost}
+                         sx={{m: 0, p: 0}}/>}
+            </Grid>
         </>
     )
 }

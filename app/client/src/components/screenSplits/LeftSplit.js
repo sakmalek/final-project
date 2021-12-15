@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from "@mui/material/Box";
-import {AuthContext} from "../context/auth";
+import {AuthContext} from "../../context/auth";
 
 const LeftSplit = ({channels, conversations, setConversationId, setChannelId}) => {
     const {user} = useContext(AuthContext);
