@@ -31,10 +31,10 @@ const conversation = require("./routes/conversation");
 app.use("/conversation", isAuthenticated, conversation);
 
 const message = require("./routes/message");
-app.use("/message", message);
+app.use("/message", isAuthenticated, message);
 
 const user = require("./routes/user");
-app.use("/user", isAuthenticated, user);
+app.use("/user", isAuthenticated, isAuthenticated, user);
 
 const profile = require("./routes/profile");
 app.use("/profile", isAuthenticated, profile);

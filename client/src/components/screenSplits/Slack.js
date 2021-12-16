@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import { Grid, Paper} from "@mui/material";
+import {Grid, Paper} from "@mui/material";
 import LeftSplit from "./LeftSplit";
 import RightSplit from "./RightSplit";
 import Navigation from "../Navigation";
@@ -19,8 +19,9 @@ const Slack = () => {
     const [channelId, setChannelId] = useState(null);
     const [conversationId, setConversationId] = useState(null);
     const [openAddChannelModel, setOpenAddChannelModel] = React.useState(false);
+    const storedToken = localStorage.getItem('authToken')
     useEffect(() => {
-        axios.get(`/channel/${user._id}`)
+        axios.get(`/channel/${user._id}`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 setChannels(response.data)
             })
@@ -28,7 +29,7 @@ const Slack = () => {
     }, [])
 
     useEffect(() => {
-        axios.get(`/conversation/${user._id}`)
+        axios.get(`/conversation/${user._id}`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 setConversations(response.data)
             })

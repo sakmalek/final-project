@@ -25,9 +25,10 @@ const RightSplit = ({channelId, conversationId}) => {
         const date = new Date(parsed)
         return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`
     }
+    const storedToken = localStorage.getItem('authToken')
 
     useEffect(() => {
-        channelId && axios.get(`message/${channelId}/channel`)
+        channelId && axios.get(`message/${channelId}/channel`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 setMessages(response.data)
                 console.log("MESSAGES", messages)
@@ -37,7 +38,7 @@ const RightSplit = ({channelId, conversationId}) => {
     }, [channelId, post]);
 
     useEffect(() => {
-        conversationId && axios.get(`message/${conversationId}/conversation`)
+        conversationId && axios.get(`message/${conversationId}/conversation`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 setMessages(response.data)
                 scrollToBottom()

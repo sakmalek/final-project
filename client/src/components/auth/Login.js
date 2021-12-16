@@ -12,9 +12,11 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState(undefined)
     const [open, setOpen] = React.useState(false);
 
+    const storedToken = localStorage.getItem('authToken')
+
     const submitHandler = (e) => {
         e.preventDefault();
-        axios.post('/auth/login', loginForm)
+        axios.post('/auth/login', loginForm, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 console.log(response.data.authToken)
                 const token = response.data.authToken

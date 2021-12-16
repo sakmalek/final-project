@@ -33,8 +33,10 @@ export default function AddChannelModal({openAddChannelModel, setOpenAddChannelM
     const [submitted, setSubmitted] = useState(false)
     const [channelMembers, setChannelMembers] = useState([])
 
+    const storedToken = localStorage.getItem('authToken')
+
     useEffect(() => {
-        axios.get('/user')
+        axios.get('/user', {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => setUsers(response.data))
             .catch(err => console.log(err))
     }, []);
@@ -44,7 +46,7 @@ export default function AddChannelModal({openAddChannelModel, setOpenAddChannelM
 
         const requestBody = {...addChannelForm, member_ids: channelMembers}
 
-        axios.put('/channel', requestBody)
+        axios.put('/channel', requestBody, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(() => {
                 setSubmitted(!submitted);
                 handleClose();

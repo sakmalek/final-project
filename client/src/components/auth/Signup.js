@@ -10,10 +10,11 @@ const Signup = () => {
     const [errorMessage, setErrorMessage] = useState(undefined)
     const [open, setOpen] = React.useState(false);
 
+    const storedToken = localStorage.getItem('authToken')
     const submitHandler = (e) => {
         e.preventDefault();
 
-        axios.post('/auth/signup', signupForm)
+        axios.post('/auth/signup', signupForm, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(() => navigate('/login'))
             .catch(err => {
                 setErrorMessage(err.response.data.message)

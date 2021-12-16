@@ -13,6 +13,7 @@ export default function MessagePost({conversationId, channelId, post, setPost}) 
 
     const {user} = useContext(AuthContext);
     const [message, setMessage] = useState("")
+    const storedToken = localStorage.getItem('authToken')
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ export default function MessagePost({conversationId, channelId, post, setPost}) 
             type: "text",
             source: message
         }
-        axios.put(`/message`, requestBody)
+        axios.put(`/message`, requestBody,{headers: {Authorization: `Bearer ${storedToken}`}} )
             .then(response => {
                 console.log(response.data)
                 setPost(!post)
