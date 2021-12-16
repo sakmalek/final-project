@@ -25,19 +25,19 @@ const auth = require("./routes/auth");
 app.use("/auth", auth);
 
 const channel = require("./routes/channel");
-app.use("/channel", channel);
+app.use("/channel", isAuthenticated, channel);
 
 const conversation = require("./routes/conversation");
-app.use("/conversation", conversation);
+app.use("/conversation", isAuthenticated, conversation);
 
 const message = require("./routes/message");
 app.use("/message", message);
 
 const user = require("./routes/user");
-app.use("/user", user);
+app.use("/user", isAuthenticated, user);
 
 const profile = require("./routes/profile");
-app.use("/profile", profile);
+app.use("/profile", isAuthenticated, profile);
 
 app.use((req, res) => {
     // If no routes match, send them the React HTML.
