@@ -4,6 +4,7 @@ const User = require("../models/User.model")
 router.get("/", (req, res, next) => {
 
     User.find()
+        .populate('profile')
         .then(users => {
             res.status(200).json(users);
         })
@@ -16,7 +17,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
 
     User.findById(req.params.id)
-        .populate('Profile')
+        .populate('profile')
         .then(user => {
             res.status(200).json(user);
         })

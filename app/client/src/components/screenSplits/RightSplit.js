@@ -96,7 +96,7 @@ const RightSplit = ({channelId, conversationId}) => {
                 width: "90%",
                 pl: 2
             }}
-            >{channelId || conversationId &&
+            >{(channelId || conversationId) &&
             <MessagePost channelId={channelId} conversationId={conversationId} post={post} setPost={setPost}
                          sx={{m: 0, p: 0}}/>}
             </Grid>

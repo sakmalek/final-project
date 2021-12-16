@@ -3,7 +3,7 @@ const Channel = require("../models/Channel.model")
 
 router.get("/:userId", (req, res, next) => {
 
-    Channel.find({$or: [{owner_id: req.params.userId}, {follower_ids: {$in: [req.params.userId]}}]})
+    Channel.find({$or: [{owner_id: req.params.userId}, {member_ids: {$in: [req.params.userId]}}]})
         .then(channels => {
             res.status(200).json(channels);
         })
@@ -27,8 +27,8 @@ router.get("/:id", (req, res, next) => {
 
 router.put("/", (req, res, next) => {
 
-    const {name, description, owner_id} = req.body;
-    Channel.create({name, description, owner_id})
+    const {name, description, owner_id, member_ids} = req.body;
+    Channel.create({name, description, owner_id, member_ids})
         .then(() => {
             res.status(200).json({message: "channel successfully created."});
         })

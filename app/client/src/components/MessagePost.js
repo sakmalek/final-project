@@ -10,7 +10,6 @@ import {AuthContext} from "../context/auth";
 import axios from "axios";
 
 export default function MessagePost({conversationId, channelId, post, setPost}) {
-    console.log(channelId, conversationId)
 
     const {user} = useContext(AuthContext);
     const [message, setMessage] = useState("")

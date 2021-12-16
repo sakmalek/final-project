@@ -15,7 +15,7 @@ const channelSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: 'User',
             },
-            follower_ids: {
+            member_ids: {
                 type: [Schema.Types.ObjectId],
                 ref: 'User',
             },
