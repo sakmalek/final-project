@@ -47,36 +47,35 @@ router.post('/signup', (req, res, next) => {
             const password_hash = bcrypt.hashSync(password, salt);
             const verification_hash = bcrypt.hashSync(email + username, salt).replace('/', '');
 
-            return User.create({email, password_hash, username, verification_hash});
-        })
-        .then((createdUser) => {
-            const {email, username, _id} = createdUser;
-            const user = {email, username, _id};
+            User.create({email, password_hash, username, verification_hash})
+                .then((createdUser) => {
+                    res.status(201).json(createdUser)
+                    Profile
+                        .create({username: createdUser.username, email: createdUser.email})
+                        .then(profile => {
+                            User.findByIdAndUpdate(createdUser._id, {$push: {profile: profile._id}}, {new: true})
+                                .then(updatedProfile => {
+                                    const {email, username, verification_hash} = createdUser;
+                                    let mailDetails = {
+                                        from: process.env.EMAIL,
+                                        to: email,
+                                        subject: 'E-Mail verification',
+                                        text: `Dear ${username},\nYou're almost ready to get started.\nPlease click the link below to verify your email address and be part of Ironslack!\n\n${process.env.ORIGIN}/auth/verification/${verification_hash}\n\nCheers,\nIronslack`
+                                    };
 
-            res.status(201).json({user: user});
-            return createdUser
-        })
-        .then(createdUser => {
-            Profile.create({username: createdUser.username, email: createdUser.email})
-            return createdUser
-        })
-        .then(createdUser => {
+                                    mailTransporter.sendMail(mailDetails, function (err, data) {
+                                        if (err) {
+                                            console.log('Error Occurs while sending the email');
+                                        } else {
+                                            console.log('Email sent successfully');
+                                        }
+                                    });
+                                })
+                        })
+                        .catch(err => res.status(500).json({message: "Internal Server Error."}))
+                })
+                .catch(err => res.status(500).json({message: "Internal Server Error."}))
 
-            const {email, username, verification_hash} = createdUser;
-            let mailDetails = {
-                from: process.env.EMAIL,
-                to: email,
-                subject: 'E-Mail verification',
-                text: `Dear ${username},\nYou're almost ready to get started.\nPlease click the link below to verify your email address and be part of Ironslack!\n\n${process.env.ORIGIN}/auth/verification/${verification_hash}\n\nCheers,\nIronslack`
-            };
-
-            mailTransporter.sendMail(mailDetails, function (err, data) {
-                if (err) {
-                    console.log('Error Occurs while sending the email');
-                } else {
-                    console.log('Email sent successfully');
-                }
-            });
         })
         .catch(err => {
             console.log(err);
