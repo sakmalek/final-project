@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
-import {Fab, Grid, Paper} from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
+import { Grid, Paper} from "@mui/material";
 import LeftSplit from "./LeftSplit";
 import RightSplit from "./RightSplit";
 import Navigation from "../Navigation";
