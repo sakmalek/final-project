@@ -2,7 +2,6 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
-import {Paper} from '@mui/material'
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -20,7 +19,7 @@ const style = {
     width: "50%",
     height: "50%",
     borderRadius: "10px",
-    bgcolor: "#ffffffd6",
+    bgcolor: "white",
     border: '1px solid #000',
     boxShadow: 24,
     p: 4,
@@ -53,7 +52,7 @@ export default function AddChannelModal({openAddChannelModel, setOpenAddChannelM
             .catch(err => console.log(err))
     }
     return (
-        <div>
+        <>
             <Modal
                 open={openAddChannelModel}
                 onClose={handleClose}
@@ -113,12 +112,12 @@ export default function AddChannelModal({openAddChannelModel, setOpenAddChannelM
                             />
 
                         </Grid>
-                        <Grid textAlign="center" item xs={12}>
+                        <Grid item xs={12} textAlign="center">
                             <Button sx={{ml: 3, mr: 3, mt: 1, mb: 1}} type="submit">Create</Button>
                         </Grid>
                     </Grid>
                 </Fade>
             </Modal>
-        </div>
+        </>
     );
 }

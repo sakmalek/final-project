@@ -62,8 +62,9 @@ const LeftSplit = ({channels, conversations, setConversationId, setChannelId}) =
                         <>
                             {conversations && conversations.map(conversation => {
                                 return (
-                                    <Box sx={{display: "flex", width: "100%", pb: 1}}>
-                                        <img style={{width: '40px', 'border-radius': '50%'}}
+                                    <Box key={conversation._id} sx={{display: "flex", width: "100%", pb: 1}}>
+                                        <img style={{width: '40px', borderRadius: '50%'}}
+                                             alt=""
                                              src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                         <Button sx={{color: "yellow"}}
                                                 onClick={() => {

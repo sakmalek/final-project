@@ -71,7 +71,7 @@ const Login = () => {
                 />
                 </Grid>
 
-                <Grid textAlign="center" item xs={12}>
+                <Grid item xs={12} textAlign="center">
                     <Button sx={{ml: 3, mr: 3, mt: 1, mb: 1}} type="submit">Login</Button>
                 </Grid>
 
@@ -88,11 +88,11 @@ const Login = () => {
                 </Grid>
             </Paper>
 
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
-                        {errorMessage}
-                    </Alert>
-                </Snackbar>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{width: '100%'}}>
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
 
         </Grid>
     );

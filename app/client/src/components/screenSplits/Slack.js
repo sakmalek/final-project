@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import LeftSplit from "./LeftSplit";
 import RightSplit from "./RightSplit";
 import Navigation from "../Navigation";
-import AddButtom from "../AddButtom";
+import AddButton from "../AddButton";
 import {AuthContext} from "../../context/auth";
 import axios from "axios";
 import AddChannelModal from "../modals/AddChannelModal";
@@ -53,7 +53,7 @@ const Slack = () => {
                         setConversationId={setConversationId}
                         setChannelId={setChannelId}
                     />
-                    <AddButtom openAddChannelModel={openAddChannelModel}
+                    <AddButton openAddChannelModel={openAddChannelModel}
                                setOpenAddChannelModel={setOpenAddChannelModel}
                                color="primary" aria-label="add"
                                sx={{
@@ -63,7 +63,7 @@ const Slack = () => {
                                    ml: "10px",
                                    mt: "-10px",
                                }}>
-                    </AddButtom>
+                    </AddButton>
                 </Paper>
             </Grid>
             <Grid item lg={9} md={9} xs={12} sx={{height: height, position: "relative"}}>

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, {useState} from "react";
 import {Alert, Button, Grid, Paper, Snackbar, TextField, Typography} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -72,7 +72,7 @@ const Signup = () => {
                 />
                 </Grid>
 
-                <Grid textAlign="center" item xs={12}>
+                <Grid item xs={12} textAlign="center">
                     <Button sx={{ml: 3, mr: 3, mt: 1, mb: 1}} type="submit">Signup</Button>
                 </Grid>
 

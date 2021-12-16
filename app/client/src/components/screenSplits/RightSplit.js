@@ -70,8 +70,8 @@ const RightSplit = ({channelId, conversationId}) => {
                             <TimelineSeparator>
                                 <TimelineConnector/>
                                 <TimelineDot>
-                                    <img style={{width: '40px', 'border-radius': '50%'}}
-                                         src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
+                                    <img style={{width: '40px', borderRadius: '50%'}}
+                                         alt="" src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                 </TimelineDot>
                                 <TimelineConnector/>
                             </TimelineSeparator>

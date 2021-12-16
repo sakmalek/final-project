@@ -7,38 +7,29 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {useContext} from 'react'
 import {AuthContext} from '../context/auth'
 import Divider from "@mui/material/Divider";
-import {Button} from "@mui/material";
 
 export default function Navigation() {
     const {logoutUser} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
 
     const handleMenuClose = () => {
         setAnchorEl(null);
-        handleMobileMenuClose();
     };
 
     const handleLogout = () => {
         logoutUser();
         setAnchorEl(null);
-        handleMobileMenuClose();
     };
 
     const menuId = 'primary-search-account-menu';
@@ -63,56 +54,6 @@ export default function Navigation() {
             <MenuItem onClick={handleMenuClose}>Delete Account</MenuItem>
             <Divider light/>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon/>
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon/>
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <Button
-                    size="large"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle/>
-                </Button>
-                <p>Profile</p>
-            </MenuItem>
         </Menu>
     );
 

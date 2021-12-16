@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
@@ -13,9 +13,9 @@ const actions = [
     {icon: <GroupAddIcon/>, name: 'Create Channel', id: 2},
 ];
 
-export default function AddButtom({openAddChannelModel, setOpenAddChannelModel}) {
+export default function AddButton({openAddChannelModel, setOpenAddChannelModel}) {
     return (
-        <Grid lg={2} md={2} xs={12}>
+        <Grid item lg={2} md={2} xs={12}>
             <SpeedDial
                 ariaLabel="SpeedDial basic example"
                 sx={{position: 'absolute', bottom: 16, right: 16}}
