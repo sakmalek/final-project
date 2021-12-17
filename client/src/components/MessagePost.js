@@ -25,7 +25,7 @@ export default function MessagePost({conversationId, channelId, post, setPost}) 
             type: "text",
             source: message
         }
-        message !== "" && axios.put(`/message`, requestBody, {headers: {Authorization: `Bearer ${storedToken}`}})
+      axios.put(`/message`, requestBody, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 console.log(response.data)
                 setPost(!post)

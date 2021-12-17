@@ -26,10 +26,6 @@ const RightSplit = ({channelId, conversationId}) => {
         return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`
     }
     const storedToken = localStorage.getItem('authToken')
-// for demo
-    setInterval(() => {
-        setPost(!post)
-    }, 10000);
 
     useEffect(() => {
         channelId && axios.get(`message/${channelId}/channel`, {headers: {Authorization: `Bearer ${storedToken}`}})
