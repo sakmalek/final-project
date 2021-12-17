@@ -121,7 +121,10 @@ router.post('/login', (req, res, next) => {
 
 router.get('/verification/:hash', (req, res, next) => {
     User.findOneAndUpdate({verification_hash: req.params.hash}, {is_verified: true})
+        .populate('profile')
         .then(foundUser => {
+            Profile.findByIdAndUpdate(foundUser.profile._id, {is_verified: true}, {new: true})
+                .then(profile => console.log(profile))
             console.log('user is verified', foundUser);
             res.status(200).json({message: `Dear ${foundUser.username}, you have verified your email successfully.`})
         })
