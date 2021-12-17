@@ -29,7 +29,7 @@ export default function EditProfile({openEditProfileModel, setOpenEditProfileMod
     const [profileForm, setProfileForm] = useState({});
 
     const storedToken = localStorage.getItem('authToken')
-    console.log(storedToken)
+
     useEffect(() => {
         axios.get(`/user/${user._id}`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {

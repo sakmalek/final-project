@@ -39,7 +39,7 @@ export default function StartConversation({
     useEffect(() => {
         axios.get('/user', {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
-                console.log(response.data)
+
                 setUsers(response.data)
             })
             .catch(err => console.log(err))

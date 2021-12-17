@@ -18,7 +18,6 @@ const Login = () => {
         e.preventDefault();
         axios.post('/auth/login', loginForm, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
-                console.log(response.data.authToken)
                 const token = response.data.authToken
                 loginUser(token)
                 navigate('/')

@@ -31,7 +31,6 @@ const RightSplit = ({channelId, conversationId}) => {
         channelId && axios.get(`message/${channelId}/channel`, {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => {
                 setMessages(response.data)
-                console.log("MESSAGES", messages)
                 scrollToBottom()
             })
             .catch(err => console.log(err))

@@ -9,8 +9,8 @@ import {Grid} from "@mui/material";
 
 
 const actions = [
-    {icon: <ChatIcon/>, name: 'Start Conversation', id: 1},
-    {icon: <GroupAddIcon/>, name: 'Create Channel', id: 2},
+    {icon: <ChatIcon/>, name: 'Create Channel', id: 1},
+    {icon: <GroupAddIcon/>, name: 'Start Conversation', id: 2},
 ];
 
 export default function AddButton({
