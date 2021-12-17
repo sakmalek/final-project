@@ -70,7 +70,7 @@ export default function EditProfile({openEditProfileModel, setOpenEditProfileMod
                     <Grid item xs={12} container sx={style} spacing={2} onSubmit={submitHandler}
                           component="form">
 
-
+                        {profileForm.is_verified ?
                             <Grid item xs={2} sx={{alignSelf: "center"}}><img style={{
                                 width: '60px',
                                 borderRadius: '50%',
@@ -79,8 +79,16 @@ export default function EditProfile({openEditProfileModel, setOpenEditProfileMod
                                                                               alt=""
                                                                               src={profileForm.image_url}
                             /></Grid>
-
-
+                            :
+                            <Grid item xs={2} sx={{alignSelf: "center"}}><img style={{
+                                width: '60px',
+                                borderRadius: '50%',
+                                border: "3px solid red"
+                            }}
+                                                                              alt=""
+                                                                              src={profileForm.image_url}
+                            /></Grid>
+                        }
 
                         <Grid item xs={10}> <TextField style={{width: '100%'}}
                                                        sx={{m: 1}}
