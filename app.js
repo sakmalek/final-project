@@ -17,12 +17,10 @@ const {isAuthenticated} = require('./middleware/jwt.js')
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
-// Routes
-const allRoutes = require("./routes");
-app.use("/api", allRoutes);
-
 const auth = require("./routes/auth");
 app.use("/auth", auth);
+const profile = require("./routes/profile");
+app.use("/profile", isAuthenticated, profile);
 
 const channel = require("./routes/channel");
 app.use("/channel", isAuthenticated, channel);
@@ -34,10 +32,7 @@ const message = require("./routes/message");
 app.use("/message", isAuthenticated, message);
 
 const user = require("./routes/user");
-app.use("/user", isAuthenticated, isAuthenticated, user);
-
-const profile = require("./routes/profile");
-app.use("/profile", isAuthenticated, profile);
+app.use("/user", isAuthenticated, user);
 
 app.use((req, res) => {
     // If no routes match, send them the React HTML.

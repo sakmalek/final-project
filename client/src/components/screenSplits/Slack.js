@@ -6,8 +6,9 @@ import Navigation from "../Navigation";
 import AddButton from "../AddButton";
 import {AuthContext} from "../../context/auth";
 import axios from "axios";
-import AddChannelModal from "../modals/AddChannelModal";
-
+import AddChannel from "../modals/AddChannel";
+import StartConversation from "../modals/StartConversation";
+import EditProfile from "../modals/EditProfile";
 
 const Slack = () => {
     const {user} = useContext(AuthContext);
@@ -18,7 +19,11 @@ const Slack = () => {
     const [conversations, setConversations] = useState(null);
     const [channelId, setChannelId] = useState(null);
     const [conversationId, setConversationId] = useState(null);
-    const [openAddChannelModel, setOpenAddChannelModel] = React.useState(false);
+    const [openAddChannelModel, setOpenAddChannelModel] = useState(false);
+    const [openStartConversationModel, setOpenStartConversationModel] = useState(false);
+    const [openEditProfileModel, setOpenEditProfileModel] = useState(false);
+    const [submitted, setSubmitted] = useState(false)
+
     const storedToken = localStorage.getItem('authToken')
     useEffect(() => {
         axios.get(`/channel/${user._id}`, {headers: {Authorization: `Bearer ${storedToken}`}})
@@ -26,7 +31,7 @@ const Slack = () => {
                 setChannels(response.data)
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [submitted])
 
     useEffect(() => {
         axios.get(`/conversation/${user._id}`, {headers: {Authorization: `Bearer ${storedToken}`}})
@@ -34,7 +39,7 @@ const Slack = () => {
                 setConversations(response.data)
             })
             .catch(err => console.log(err))
-    }, []);
+    }, [submitted]);
 
 
     return (
@@ -46,7 +51,10 @@ const Slack = () => {
                 <Paper
                     sx={{maxHeight: height, height: "100%", backgroundColor: "#032051db", overflowY: "overlay"}}
                     elevation={3}>
-                    <Navigation/>
+                    <Navigation
+                        openEditProfileModel={openEditProfileModel}
+                        setOpenEditProfileModel={setOpenEditProfileModel}
+                    />
                     <LeftSplit
                         channels={channels}
                         conversations={conversations}
@@ -55,6 +63,8 @@ const Slack = () => {
                     />
                     <AddButton openAddChannelModel={openAddChannelModel}
                                setOpenAddChannelModel={setOpenAddChannelModel}
+                               openStartConversationModel={openStartConversationModel}
+                               setOpenStartConversationModel={setOpenStartConversationModel}
                                color="primary" aria-label="add"
                                sx={{
                                    backgroundColor: "#3861a4b5",
@@ -73,8 +83,17 @@ const Slack = () => {
                         channelId={channelId}
                         conversationId={conversationId}
                     />
-                    <AddChannelModal openAddChannelModel={openAddChannelModel}
-                                     setOpenAddChannelModel={setOpenAddChannelModel}/>
+                    <AddChannel openAddChannelModel={openAddChannelModel}
+                                setOpenAddChannelModel={setOpenAddChannelModel}
+                                submitted={submitted} setSubmitted={setSubmitted}/>
+
+                    <StartConversation openStartConversationModel={openStartConversationModel}
+                                       setOpenStartConversationModel={setOpenStartConversationModel}
+                                       submitted={submitted} setSubmitted={setSubmitted}/>
+
+                    <EditProfile openEditProfileModel={openEditProfileModel}
+                                       setOpenEditProfileModel={setOpenEditProfileModel}
+                                       submitted={submitted} setSubmitted={setSubmitted}/>
                 </Paper>
             </Grid>
         </Grid>

@@ -18,7 +18,7 @@ function App() {
             <Routes>
                 <Route path="/signup" element={<Signup/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/verification/:hash" element={<Verification/>}/>
+                <Route path="/auth/verification/:hash" element={<Verification/>}/>
                 <Route path="/reset/:hash" element={<Reset/>}/>
                 <Route
                     path='/'

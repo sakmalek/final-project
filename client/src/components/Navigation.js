@@ -12,7 +12,7 @@ import {useContext} from 'react'
 import {AuthContext} from '../context/auth'
 import Divider from "@mui/material/Divider";
 
-export default function Navigation() {
+export default function Navigation({openEditProfileModel, setOpenEditProfileModel}) {
     const {logoutUser} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -32,6 +32,10 @@ export default function Navigation() {
         setAnchorEl(null);
     };
 
+    const handleShowProfile = () => {
+        setOpenEditProfileModel(!openEditProfileModel)
+    }
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -49,7 +53,7 @@ export default function Navigation() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleShowProfile}>Profile</MenuItem>
             <Divider light/>
             <MenuItem onClick={handleMenuClose}>Delete Account</MenuItem>
             <Divider light/>

@@ -13,7 +13,12 @@ const actions = [
     {icon: <GroupAddIcon/>, name: 'Create Channel', id: 2},
 ];
 
-export default function AddButton({openAddChannelModel, setOpenAddChannelModel}) {
+export default function AddButton({
+                                      openAddChannelModel,
+                                      setOpenAddChannelModel,
+                                      openStartConversationModel,
+                                      setOpenStartConversationModel
+                                  }) {
     return (
         <Grid item lg={2} md={2} xs={12}>
             <SpeedDial
@@ -28,6 +33,7 @@ export default function AddButton({openAddChannelModel, setOpenAddChannelModel})
                         tooltipTitle={action.name}
                         onClick={(e) => {
                             action.id === 1 && setOpenAddChannelModel(!openAddChannelModel)
+                            action.id === 2 && setOpenStartConversationModel(!openStartConversationModel)
                         }}
                     />
                 ))}

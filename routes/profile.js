@@ -73,7 +73,7 @@ router.post("/:id", (req, res, next) => {
         is_verified,
     } = req.body;
 
-    Profile.findOneAndUpdate(req.params.id, {
+    Profile.findByIdAndUpdate(req.params.id, {
         firstname,
         lastname,
         username,

@@ -25,12 +25,12 @@ const style = {
     p: 4,
 };
 
-export default function AddChannelModal({openAddChannelModel, setOpenAddChannelModel}) {
+export default function AddChannel({openAddChannelModel, setOpenAddChannelModel, submitted, setSubmitted}) {
     const {user} = useContext(AuthContext);
     const handleClose = () => setOpenAddChannelModel(false);
     const [addChannelForm, setAddChannelForm] = useState({owner_id: user._id});
     const [users, setUsers] = useState({});
-    const [submitted, setSubmitted] = useState(false)
+
     const [channelMembers, setChannelMembers] = useState([])
 
     const storedToken = localStorage.getItem('authToken')
@@ -39,7 +39,7 @@ export default function AddChannelModal({openAddChannelModel, setOpenAddChannelM
         axios.get('/user', {headers: {Authorization: `Bearer ${storedToken}`}})
             .then(response => setUsers(response.data))
             .catch(err => console.log(err))
-    }, []);
+    }, [openAddChannelModel]);
 
     const submitHandler = (e) => {
         e.preventDefault();

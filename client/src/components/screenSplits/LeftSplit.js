@@ -18,7 +18,8 @@ const LeftSplit = ({channels, conversations, setConversationId, setChannelId}) =
     if (!channels) return <CircularProgress sx={{position: "relative", top: "50%", left: "50%"}} color="primary"/>
     return (
         <>
-            <Accordion sx={{m: .5, backgroundColor: "#032051db", color: "orange"}}>
+            <Accordion sx={{m: .5, backgroundColor: "#032051db", color: "orange"}}
+                       defaultExpanded={true}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon sx={{color: "orange"}}/>}
                     aria-controls="panel1a-content"
