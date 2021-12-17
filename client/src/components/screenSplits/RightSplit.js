@@ -26,6 +26,10 @@ const RightSplit = ({channelId, conversationId}) => {
         return `${date.getDay()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}`
     }
     const storedToken = localStorage.getItem('authToken')
+// for demo
+    setInterval(() => {
+        setPost(!post)
+    }, 10000);
 
     useEffect(() => {
         channelId && axios.get(`message/${channelId}/channel`, {headers: {Authorization: `Bearer ${storedToken}`}})
@@ -71,7 +75,8 @@ const RightSplit = ({channelId, conversationId}) => {
                                 <TimelineConnector/>
                                 <TimelineDot>
                                     <img style={{width: '40px', borderRadius: '50%'}}
-                                         alt="" src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
+                                         alt=""
+                                         src="https://lh3.googleusercontent.com/ffFwGD7OMmSsvlcJmpKd5l5Y-wLwgcp7cYr5OG1AruAicX9QwROjNB29m9XIBlhHqmyVk644QTjZgj-haJ7ModBZdkr79dpg9Adc8Y4"/>
                                 </TimelineDot>
                                 <TimelineConnector/>
                             </TimelineSeparator>
