@@ -45,7 +45,7 @@ router.post('/signup', (req, res, next) => {
 
             const salt = bcrypt.genSaltSync(saltRounds);
             const password_hash = bcrypt.hashSync(password, salt);
-            const verification_hash = bcrypt.hashSync(email + username, salt).replace('/', '');
+            const verification_hash = bcrypt.hashSync(email + username, salt).replace(/\//g, "");
 
             User.create({email, password_hash, username, verification_hash})
                 .then((createdUser) => {
@@ -54,13 +54,13 @@ router.post('/signup', (req, res, next) => {
                         .create({username: createdUser.username, email: createdUser.email})
                         .then(profile => {
                             User.findByIdAndUpdate(createdUser._id, {$push: {profile: profile._id}}, {new: true})
-                                .then(updatedProfile => {
+                                .then(() => {
                                     const {email, username, verification_hash} = createdUser;
                                     let mailDetails = {
                                         from: process.env.EMAIL,
                                         to: email,
                                         subject: 'E-Mail verification',
-                                        text: `Dear ${username},\nYou're almost ready to get started.\nPlease click the link below to verify your email address and be part of Ironslack!\n\n${process.env.ORIGIN}/auth/verification/${verification_hash}\n\nCheers,\nIronslack`
+                                        text: `Dear ${username},\nYou're almost ready to get started.\nPlease click the link below to verify your email address and be part of Ironslack!\n\n${process.env.ORIGIN}verification/${verification_hash}\n\nCheers,\nIronslack`
                                     };
 
                                     mailTransporter.sendMail(mailDetails, function (err, data) {
